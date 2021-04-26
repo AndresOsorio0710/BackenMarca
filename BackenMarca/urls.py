@@ -24,5 +24,10 @@ urlpatterns = [
     path('api/', include('product_in_cellar_app.urls')),
     path('api/', include('product_in_cellar_detail_app.urls')),
     path('api/', include('collection_app.urls')),
-    path('api/', include('section_app.urls'))
+    path('api/', include('section_app.urls')),
+    path('api/', include('product_sale_app.urls')),
+    path('api/', include('product_detail_app.urls')),
+    path('api/', include('person_app.urls')),
+    path('api/', include('employee_app.urls')),
+    path('api/', include('client_app.urls'))
 ]
