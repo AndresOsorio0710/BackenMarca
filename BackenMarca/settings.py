@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'provider_app.apps.ProviderAppConfig',
     'product_in_cellar_app.apps.ProductInCellarAppConfig',
     'product_in_cellar_detail_app.apps.ProductInCellarDetailAppConfig',
+    'collection_app.apps.CollectionAppConfig',
+    'section_app.apps.SectionAppConfig',
 ]
 
 MIDDLEWARE = [

@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/', include('cellar_app.urls')),
     path('api/', include('provider_app.urls')),
     path('api/', include('product_in_cellar_app.urls')),
-    path('api/', include(('product_in_cellar_detail_app.urls', 'product_in_cellar_detail_app'),
-                         namespace='product_in_cellar_detail_app')),
+    path('api/', include('product_in_cellar_detail_app.urls')),
+    path('api/', include('collection_app.urls')),
+    path('api/', include('section_app.urls'))
 ]
