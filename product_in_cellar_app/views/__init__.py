@@ -1,0 +1,1 @@
+from .product_in_cellar import ProductInCellarViewSet
