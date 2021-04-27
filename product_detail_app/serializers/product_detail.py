@@ -8,6 +8,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['uuid']
 
+
 class ProductListSerializer(serializers.Serializer):
     uuid = serializers.UUIDField()
     cellar = serializers.CharField()
@@ -21,4 +22,3 @@ class ProductListSerializer(serializers.Serializer):
     collection = serializers.CharField()
     collectionName = serializers.CharField()
     amount = serializers.IntegerField()
-
