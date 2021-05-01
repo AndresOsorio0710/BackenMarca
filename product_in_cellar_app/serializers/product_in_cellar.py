@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from product_in_cellar_app.models import ProductInCellar
+import random
 
 
 class ProductInCellarSerializer(serializers.ModelSerializer):
@@ -16,6 +17,7 @@ class ProductListSerializer(serializers.Serializer):
     providerName = serializers.CharField()
     provider = serializers.CharField()
     name = serializers.CharField()
+    reference = serializers.CharField()
     description = serializers.CharField()
     cost = serializers.FloatField()
     unit_cost = serializers.FloatField()
@@ -42,8 +44,12 @@ class SaveProductInCellarSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 "status": "La cantidad ingresada excede la capacidad disponible de la bodega. "
             })
+        name = attrs.get('name').upper()
+        pre = name[0:4]
+        rabd = random.randint(0, 9999)
         attrs.update({
             'unit_cost': attrs.get('cost') / attrs.get('quantity_entered'),
-            'free_quantity': attrs.get('quantity_entered')
+            'free_quantity': 0,
+            'reference': pre + "-" + "{:0>3}".format(str(len(name))) + "-" + "{:0>4}".format(str(rabd))
         })
         return attrs

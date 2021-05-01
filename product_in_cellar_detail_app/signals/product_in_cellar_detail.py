@@ -10,10 +10,10 @@ def post_save_product_in_cellar_detail(sender, instance, created, update_fields,
     def doit():
         product_in_cellar_instance = ProductInCellar.objects.get(uuid=instance.product_in_cellar_id)
         if created:
-            product_in_cellar_instance.free_quantity = product_in_cellar_instance.free_quantity - instance.free_quantity
+            product_in_cellar_instance.free_quantity = product_in_cellar_instance.free_quantity + 1
             product_in_cellar_instance.save(update_fields=('free_quantity',))
         elif (instance.deletecd_at != None):
-            product_in_cellar_instance.free_quantity = product_in_cellar_instance.free_quantity + instance.free_quantity
+            product_in_cellar_instance.free_quantity = product_in_cellar_instance.free_quantity - 1
             product_in_cellar_instance.save(update_fields=('free_quantity',))
         else:
             update_fields

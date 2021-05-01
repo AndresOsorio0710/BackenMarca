@@ -9,6 +9,7 @@ class ProductInCellar(ParanoidModel):
     uuid = models.UUIDField(default=uuid4, editable=False, primary_key=True)
     cellar = models.ForeignKey(Cellar, on_delete=models.PROTECT)  # bodega
     provider = models.ForeignKey(Provider, on_delete=models.PROTECT)  # proveedor
+    reference = models.CharField(max_length=20, default='NOT')
     name = models.CharField(max_length=50, default='NOT INCLUDED')  # nombre
     description = models.TextField(default='NOT INCLUDED')  # descripcion
     cost = models.DecimalField(default=0, decimal_places=2, max_digits=8)  # costo
@@ -16,4 +17,4 @@ class ProductInCellar(ParanoidModel):
     quantity_entered = models.PositiveIntegerField(default=0)  # cantidad ingresada
     free_quantity = models.PositiveIntegerField(default=0)
     stop = models.PositiveIntegerField(default=0)  # cantidad minima permitida
-    show = models.BooleanField(default=False) #campo utilizado para mostrar u ocultar informacion
+    show = models.BooleanField(default=False)  # campo utilizado para mostrar u ocultar informacion

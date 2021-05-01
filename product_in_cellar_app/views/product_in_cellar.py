@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Sum
 from rest_framework import viewsets, mixins
 from product_in_cellar_app.models import ProductInCellar
 from product_in_cellar_app.serializers import ProductInCellarSerializer, SaveProductInCellarSerializer, \
@@ -23,6 +23,7 @@ class ProductInCellarViewSet(
             queryset = queryset.values(
                 'uuid',
                 'name',
+                'reference',
                 'description',
                 'cost',
                 'unit_cost',
@@ -35,7 +36,7 @@ class ProductInCellarViewSet(
                 cellar=F('cellar'),
                 providerName=F('provider__name'),
                 provider=F('provider')
-            )
+            ).order_by('name')
 
         return queryset
 

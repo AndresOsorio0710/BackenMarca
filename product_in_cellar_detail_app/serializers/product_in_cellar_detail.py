@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from product_in_cellar_app.models import ProductInCellar
 from product_in_cellar_detail_app.models import ProductInCellarDetail
+from django.db.models import Count
 
 
 class ProductInCellarDetailSerializer(serializers.ModelSerializer):
@@ -9,30 +11,51 @@ class ProductInCellarDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ['uuid']
 
 
-class ProductListSerializer(serializers.Serializer):
+class ListSerializer(serializers.Serializer):
     uuid = serializers.UUIDField()
     product = serializers.CharField()
-    productName = serializers.CharField()
-    cellarName = serializers.CharField()
-    quantity_entered = serializers.IntegerField()
-    free_quantity = serializers.IntegerField()
+    name = serializers.CharField()
+    cellar = serializers.CharField()
+    provider = serializers.CharField()
+    reference = serializers.CharField()
+    type = serializers.CharField()
+    size = serializers.CharField()
+    state = serializers.CharField()
+    info = serializers.CharField()
+
+
+class PICListSerializer(serializers.Serializer):
+    product_in_cellar = serializers.CharField()
+    name = serializers.CharField()
+    cellar = serializers.CharField()
+    provider = serializers.CharField()
+    reference = serializers.CharField()
     description = serializers.CharField()
+    cost = serializers.FloatField()
+    unit_cost = serializers.FloatField()
+    quantity = serializers.IntegerField()
+    free = serializers.IntegerField()
+    stop = serializers.IntegerField()
 
 
-class SaveProductInCellarDetailSerializer(serializers.ModelSerializer):
+class PICSizeListSerializer(serializers.Serializer):
+    size = serializers.CharField()
+    free = serializers.IntegerField()
+
+
+class SaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductInCellarDetail
         fields = ['product_in_cellar',
-                  'quantity_entered',
-                  'description'
+                  'type',
+                  'size',
+                  'state',
+                  'info'
                   ]
 
     def validate(self, attrs):
-        if attrs.get('product_in_cellar').free_quantity < attrs.get('quantity_entered'):
+        if attrs.get('product_in_cellar').free_quantity == attrs.get('product_in_cellar').quantity_entered:
             raise serializers.ValidationError({
-                "status": "Cantidad invalida, excede la cantidad no asociada del producto en bodega."
+                "status": "El producto ya fue segcionado y relacionado. "
             })
-        attrs.update({
-            'free_quantity': attrs.get('quantity_entered')
-        })
         return attrs
