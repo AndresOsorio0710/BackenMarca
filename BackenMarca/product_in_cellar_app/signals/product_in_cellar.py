@@ -1,0 +1,23 @@
+from django.db import transaction
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from BackenMarca.cellar_app.models import Cellar
+from BackenMarca.product_in_cellar_app.models import ProductInCellar
+
+
+@receiver(post_save, sender=ProductInCellar)
+def post_save_product_in_cellar(sender, instance, created, update_fields, **kwargs):
+    def doit():
+        if created:
+            cellar_instance = Cellar.objects.get(uuid=instance.cellar_id)
+            cellar_instance.free_capacity = cellar_instance.free_capacity - instance.quantity_entered
+            cellar_instance.save(update_fields=('free_capacity',))
+        elif (instance.deleted_at != None):
+            cellar_instance = Cellar.objects.get(uuid=instance.cellar_id)
+            cellar_instance.free_capacity = cellar_instance.free_capacity + instance.free_quantity
+            cellar_instance.save(update_fields=('free_capacity',))
+
+        else:
+            update_fields
+
+    transaction.on_commit(doit)
