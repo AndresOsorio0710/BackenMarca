@@ -27,7 +27,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',
@@ -37,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_paranoid',
+    'BackenMarca.access_control.apps.AcessControlAppConfig',
     'BackenMarca.cellar_app.apps.CellarAppConfig',
     'BackenMarca.provider_app.apps.ProviderAppConfig',
     'BackenMarca.product_in_cellar_app.apps.ProductInCellarAppConfig',
@@ -51,6 +52,14 @@ INSTALLED_APPS = [
     'BackenMarca.client_app.apps.ClientAppConfig',
     'BackenMarca.user_app.apps.UserAppConfig',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,7 +1,7 @@
-
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('BackenMarca.access_control.urls')),
     path('', include('BackenMarca.cellar_app.urls')),
     path('', include('BackenMarca.provider_app.urls')),
     path('', include('BackenMarca.product_in_cellar_app.urls')),
@@ -15,4 +15,3 @@ urlpatterns = [
     path('', include('BackenMarca.client_app.urls')),
     path('', include('BackenMarca.user_app.urls'))
 ]
-
